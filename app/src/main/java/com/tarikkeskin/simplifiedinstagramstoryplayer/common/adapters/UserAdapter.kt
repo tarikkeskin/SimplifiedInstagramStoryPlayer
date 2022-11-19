@@ -1,4 +1,4 @@
-package com.tarikkeskin.simplifiedinstagramstoryplayer.common
+package com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter

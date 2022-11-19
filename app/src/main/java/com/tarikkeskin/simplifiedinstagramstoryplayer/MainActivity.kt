@@ -4,7 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
-import com.tarikkeskin.simplifiedinstagramstoryplayer.common.UserAdapter
+import com.tarikkeskin.simplifiedinstagramstoryplayer.common.anim.CubicTransition
+import com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters.UserAdapter
 import com.tarikkeskin.simplifiedinstagramstoryplayer.data.StoryList
 import com.tarikkeskin.simplifiedinstagramstoryplayer.databinding.ActivityMainBinding
 
@@ -52,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         val adapter = UserAdapter(this, StoryList.user_list)
         userViewPager = binding.viewpagerUser
         userViewPager?.adapter = adapter
+        userViewPager?.setPageTransformer(CubicTransition())
         userViewPager?.registerOnPageChangeCallback(userViewPagerCallback)
     }
 

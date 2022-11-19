@@ -1,4 +1,4 @@
-package com.tarikkeskin.simplifiedinstagramstoryplayer.common
+package com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

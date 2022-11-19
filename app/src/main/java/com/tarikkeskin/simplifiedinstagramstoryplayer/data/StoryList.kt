@@ -3,9 +3,9 @@ package com.tarikkeskin.simplifiedinstagramstoryplayer.data
 object StoryList {
 
     val story_list_1 = arrayListOf(
-        Story("https://cdn.impala.travel/properties/ckna6389z006c0uo53gyeb9oq.jpg"),
-        Story("https://cdn.impala.travel/properties/ckna62ckp006b0uo51jq4dou6.jpg"),
         Story("https://cdn.impala.travel/properties/ckna61sei006a0uo56txresa3.jpg"),
+        Story("https://cdn.impala.travel/properties/ckna62ckp006b0uo51jq4dou6.jpg"),
+        Story("https://cdn.impala.travel/properties/ckna6389z006c0uo53gyeb9oq.jpg"),
         Story("https://cdn.impala.travel/properties/ckna64p8r006f0uo51csrhy1v.jpg"),
     )
     val story_list_2 = arrayListOf(
@@ -30,10 +30,10 @@ object StoryList {
     )
 
     val user_list = arrayListOf(
-        User(1,"tarikkeskin","tarik", story_list_1),
-        User(2,"ilayda_seril","ilayda", story_list_2),
-        User(3,"ahmet1995","ahmet", story_list_3),
-        User(4,"betül_14","betül", story_list_4),
-        User(5,"bugraakin","bugra", story_list_5),
+        User(1,"tarikkeskin","profile_1", story_list_1),
+        User(2,"ilayda_seril","profile_2", story_list_2),
+        User(3,"ahmet1995","profile_3", story_list_3),
+        User(4,"betül_14","profile_4", story_list_4),
+        User(5,"bugraakin","profile_5", story_list_5),
     )
 }

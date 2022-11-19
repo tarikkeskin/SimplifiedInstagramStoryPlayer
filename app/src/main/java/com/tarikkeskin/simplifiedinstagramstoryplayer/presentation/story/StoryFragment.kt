@@ -9,10 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tarikkeskin.simplifiedinstagramstoryplayer.R
-import com.tarikkeskin.simplifiedinstagramstoryplayer.common.StoryAdapter
-import com.tarikkeskin.simplifiedinstagramstoryplayer.common.UserAdapter
+import com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters.StoryAdapter
 import com.tarikkeskin.simplifiedinstagramstoryplayer.data.StoryList
-import com.tarikkeskin.simplifiedinstagramstoryplayer.databinding.ActivityMainBinding
 import com.tarikkeskin.simplifiedinstagramstoryplayer.databinding.FragmentStoryBinding
 
 class StoryFragment : Fragment() {
@@ -63,35 +61,17 @@ class StoryFragment : Fragment() {
         val position = arguments?.getInt(POSITION_ARG)
         storyViewPager = binding.viewPagerStory
 
-
         // Disable inner viewpager2 swipe operation!!
         storyViewPager?.isUserInputEnabled = false
 
-        position?.let {
-            when (position) {
-                0 ->{
-                    storyViewPager?.adapter = StoryAdapter(requireContext(), StoryList.story_list_1)
-                    storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
-                }
-                1 ->{
-                    storyViewPager?.adapter = StoryAdapter(requireContext(), StoryList.story_list_2)
-                    storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
-                }
-                2 -> {
-                    storyViewPager?.adapter = StoryAdapter(requireContext(), StoryList.story_list_3)
-                    storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
-                }
-                3 -> {
-                    storyViewPager?.adapter = StoryAdapter(requireContext(), StoryList.story_list_4)
-                    storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
-                }
-                4 -> {
-                    storyViewPager?.adapter = StoryAdapter(requireContext(), StoryList.story_list_5)
-                    storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
-                }
-                else -> {}
-            }
-        }
+        //binding.leftIcon.setImageResource(mContext.resources.getIdentifier(option.rowImageName, "drawable",mContext.packageName))
+        storyViewPager?.adapter =
+            StoryAdapter(requireContext(), StoryList.user_list[position!!].storyList)
+        storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
+
+        // ------- Data binding -------
+        binding.imageName = StoryList.user_list[position!!].profilePicture
+        binding.userName = StoryList.user_list[position!!].userName
 
         TabLayoutMediator(binding.tablayout,
             storyViewPager!!) { tab, position ->
@@ -104,7 +84,7 @@ class StoryFragment : Fragment() {
         storyViewPager?.unregisterOnPageChangeCallback(storyViewPagerCallback)
     }
 
-    // This is for Singleton Pattern (java static)
+    // Singleton
     companion object {
         var POSITION_ARG = "position_arg"
 
