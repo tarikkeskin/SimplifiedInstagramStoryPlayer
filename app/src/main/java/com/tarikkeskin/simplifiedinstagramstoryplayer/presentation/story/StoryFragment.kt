@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.tarikkeskin.simplifiedinstagramstoryplayer.R
 import com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters.StoryAdapter
 import com.tarikkeskin.simplifiedinstagramstoryplayer.data.StoryList
+import com.tarikkeskin.simplifiedinstagramstoryplayer.data.User
 import com.tarikkeskin.simplifiedinstagramstoryplayer.databinding.FragmentStoryBinding
 
 class StoryFragment : Fragment() {
@@ -19,23 +21,15 @@ class StoryFragment : Fragment() {
 
     private var storyViewPager: ViewPager2? = null
 
-    private val storyViewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageScrollStateChanged(state: Int) {
-            super.onPageScrollStateChanged(state)
-        }
+    private lateinit var user: User
 
+    private val viewModel: StoryFragmentViewModel by activityViewModels()
+
+
+    private val storyViewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
 
-
-        }
-
-        override fun onPageScrolled(
-            position: Int,
-            positionOffset: Float,
-            positionOffsetPixels: Int,
-        ) {
-            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
         }
     }
 
@@ -48,10 +42,18 @@ class StoryFragment : Fragment() {
         setupViewPager(binding)
 
         binding.cLNext.setOnClickListener {
-            storyViewPager?.currentItem = storyViewPager?.currentItem?.plus(1)!!
+            if (storyViewPager?.currentItem == user.storyList.size - 1) {
+                viewModel.setCurrentStep(1)
+            } else {
+                storyViewPager?.currentItem = storyViewPager?.currentItem?.plus(1)!!
+            }
         }
         binding.cLBack.setOnClickListener {
-            storyViewPager?.currentItem = storyViewPager?.currentItem?.minus(1)!!
+            if (storyViewPager?.currentItem == 0) {
+                viewModel.setCurrentStep(-1)
+            } else {
+                storyViewPager?.currentItem = storyViewPager?.currentItem?.minus(1)!!
+            }
         }
         return binding.root
     }
@@ -60,18 +62,19 @@ class StoryFragment : Fragment() {
     private fun setupViewPager(binding: FragmentStoryBinding) {
         val position = arguments?.getInt(POSITION_ARG)
         storyViewPager = binding.viewPagerStory
+        user = StoryList.user_list[position!!]
 
         // Disable inner viewpager2 swipe operation!!
         storyViewPager?.isUserInputEnabled = false
 
         //binding.leftIcon.setImageResource(mContext.resources.getIdentifier(option.rowImageName, "drawable",mContext.packageName))
         storyViewPager?.adapter =
-            StoryAdapter(requireContext(), StoryList.user_list[position!!].storyList)
+            StoryAdapter(requireContext(), user.storyList)
         storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
 
         // ------- Data binding -------
-        binding.imageName = StoryList.user_list[position!!].profilePicture
-        binding.userName = StoryList.user_list[position!!].userName
+        binding.imageName = user.profilePicture
+        binding.userName = user.userName
 
         TabLayoutMediator(binding.tablayout,
             storyViewPager!!) { tab, position ->
