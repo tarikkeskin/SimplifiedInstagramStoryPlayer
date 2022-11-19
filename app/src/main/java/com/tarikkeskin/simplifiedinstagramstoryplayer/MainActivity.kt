@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private var userViewPager: ViewPager2? = null
 
-    private val mainViewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
+    private val userViewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageScrollStateChanged(state: Int) {
             super.onPageScrollStateChanged(state)
         }
@@ -52,11 +52,11 @@ class MainActivity : AppCompatActivity() {
         val adapter = UserAdapter(this, StoryList.user_list)
         userViewPager = binding.viewpagerUser
         userViewPager?.adapter = adapter
-        userViewPager?.registerOnPageChangeCallback(mainViewPagerCallback)
+        userViewPager?.registerOnPageChangeCallback(userViewPagerCallback)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        userViewPager?.unregisterOnPageChangeCallback(mainViewPagerCallback)
+        userViewPager?.unregisterOnPageChangeCallback(userViewPagerCallback)
     }
 }

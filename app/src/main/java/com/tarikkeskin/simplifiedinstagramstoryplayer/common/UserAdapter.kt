@@ -8,8 +8,7 @@ import com.tarikkeskin.simplifiedinstagramstoryplayer.presentation.story.StoryFr
 class UserAdapter(activity: AppCompatActivity, private val userList: ArrayList<User>) :
     FragmentStateAdapter(activity) {
     override fun getItemCount(): Int {
-        return 3
-        //return storyList.size
+        return userList.size
     }
 
     override fun createFragment(position: Int) = StoryFragment.newInstance(position)

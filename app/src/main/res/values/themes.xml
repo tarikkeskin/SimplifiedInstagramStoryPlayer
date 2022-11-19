@@ -16,4 +16,10 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+    <style name="Theme.BottomIcons" parent="TextAppearance.AppCompat">
+        <item name="android:tint"> @color/white</item>
+        <item name="android:layout_width">@dimen/story_bottom_icon_dim</item>
+        <item name="android:layout_height">@dimen/story_bottom_icon_dim</item>
+    </style>
 </resources>

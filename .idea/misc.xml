@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/send_message_bg.xml" value="0.1785" />
+        <entry key="app/src/main/res/drawable/tab_indicator_default.xml" value="0.1785" />
+        <entry key="app/src/main/res/drawable/tab_indicator_selected.xml" value="0.1785" />
+        <entry key="app/src/main/res/drawable/tab_selector.xml" value="0.1785" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_story.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/story_items.xml" value="0.2776268115942029" />
