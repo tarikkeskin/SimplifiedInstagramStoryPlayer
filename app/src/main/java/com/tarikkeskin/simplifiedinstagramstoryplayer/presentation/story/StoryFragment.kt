@@ -102,6 +102,7 @@ class StoryFragment : Fragment() {
             progressBar.timePerSegmentMs = it
         }
 
+
     }
 
     override fun onPause() {
@@ -130,11 +131,12 @@ class StoryFragment : Fragment() {
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> {
                 progressBar.pause()
+                viewModel.setToggleVideo(true)
                 hideStoryDetails()
             }
             MotionEvent.ACTION_UP -> {
                 progressBar.start()
-
+                viewModel.setToggleVideo(false)
                 showStoryDetail()
                 /**
                  * Handle click in touch listener

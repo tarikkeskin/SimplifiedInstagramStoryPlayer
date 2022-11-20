@@ -2,7 +2,6 @@ package com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters
 
 import android.content.Context
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.MediaController
@@ -13,11 +12,16 @@ import com.tarikkeskin.simplifiedinstagramstoryplayer.R
 import com.tarikkeskin.simplifiedinstagramstoryplayer.data.Story
 import com.tarikkeskin.simplifiedinstagramstoryplayer.databinding.StoryItemsBinding
 import com.tarikkeskin.simplifiedinstagramstoryplayer.presentation.story.StoryFragmentViewModel
+import com.tarikkeskin.simplifiedinstagramstoryplayer.utils.getLifeCycleOwner
 import com.tarikkeskin.simplifiedinstagramstoryplayer.utils.gone
 import com.tarikkeskin.simplifiedinstagramstoryplayer.utils.visible
 
 
-class StoryAdapter(private val mContext: Context, private val storyList: ArrayList<Story>,private val viewModel: StoryFragmentViewModel) :
+class StoryAdapter(
+    private val mContext: Context,
+    private val storyList: ArrayList<Story>,
+    private val viewModel: StoryFragmentViewModel,
+) :
     RecyclerView.Adapter<StoryAdapter.StoryViewHolder>() {
 
     inner class StoryViewHolder(binding: StoryItemsBinding) :
@@ -55,18 +59,24 @@ class StoryAdapter(private val mContext: Context, private val storyList: ArrayLi
             binding.videoView.setMediaController(controller)
             binding.videoView.setVideoPath(story.url)
 
-            binding.videoView.setOnPreparedListener(object :MediaPlayer.OnPreparedListener{
+
+            binding.videoView.setOnPreparedListener(object : MediaPlayer.OnPreparedListener {
                 override fun onPrepared(p0: MediaPlayer?) {
                     viewModel.setVideoDuration(binding.videoView.duration.toLong())
                     binding.videoView.requestFocus()
                     binding.videoView.start()
                 }
-
             })
 
-
-
-
+            mContext.getLifeCycleOwner()?.let { lifeCycleOwner ->
+                viewModel.toggleVideo.observe(lifeCycleOwner) {
+                    if (it) {
+                        binding.videoView.pause()
+                    } else {
+                        binding.videoView.start()
+                    }
+                }
+            }
         }
 
     }
