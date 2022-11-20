@@ -124,7 +124,7 @@
                 app:segmentSelectedStrokeColor="@android:color/transparent"
                 app:segmentStrokeColor="@android:color/transparent"
                 app:segmentStrokeWidth="1dp"
-                app:timePerSegment="6000"
+                app:timePerSegment="5000"
                 app:totalSegments="10" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

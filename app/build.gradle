@@ -19,6 +19,7 @@ android {
 
     buildFeatures{
         dataBinding true
+        viewBinding = true
     }
 
     buildTypes {
@@ -55,9 +56,5 @@ dependencies {
     //Viewpager2
     implementation "androidx.viewpager2:viewpager2:$viewpager_version"
 
-    //VideoPlayer
-    implementation "androidx.media3:media3-exoplayer:$mediaVersion"
-    implementation "androidx.media3:media3-ui:$mediaVersion"
-    implementation "androidx.media3:media3-exoplayer-dash:$mediaVersion"
 
 }

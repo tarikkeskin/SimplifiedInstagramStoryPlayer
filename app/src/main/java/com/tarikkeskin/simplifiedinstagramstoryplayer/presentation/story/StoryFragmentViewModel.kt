@@ -9,11 +9,18 @@ class StoryFragmentViewModel : ViewModel() {
     private val currentStepMutable = MutableLiveData<Int>()
     val currentStep: LiveData<Int> get() = currentStepMutable
 
+    private val videoDurationMutable = MutableLiveData<Long>()
+    val videoDuration: LiveData<Long> get() = videoDurationMutable
+
     init {
         currentStepMutable.value = 0
     }
 
     fun setCurrentStep(stepFlag: Int) {
         currentStepMutable.value = stepFlag
+    }
+
+    fun setVideoDuration(duration: Long) {
+        videoDurationMutable.value = duration
     }
 }

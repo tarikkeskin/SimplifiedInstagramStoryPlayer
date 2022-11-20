@@ -4,9 +4,9 @@ object StoryList {
 
     val story_list_1 = arrayListOf(
         Story("https://cdn.impala.travel/properties/ckna61sei006a0uo56txresa3.jpg",false),
-        Story("https://media.geeksforgeeks.org/wp-content/uploads/20201217192146/Screenrecorder-2020-12-17-19-17-36-828.mp4?_=1",true),
         Story("https://cdn.impala.travel/properties/ckna6389z006c0uo53gyeb9oq.jpg",false),
         Story("https://cdn.impala.travel/properties/ckna64p8r006f0uo51csrhy1v.jpg",false),
+        Story("http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",true),
     )
     val story_list_2 = arrayListOf(
         Story("https://cdn.impala.travel/properties/ckn8rjsxa00r40snnc9tyaxox.jpg",false),
@@ -31,9 +31,9 @@ object StoryList {
 
     val user_list = arrayListOf(
         User(1,"tarikkeskin","profile_1", story_list_1),
-        User(2,"ilayda_seril","profile_2", story_list_2),
+        User(2,"bugraakin","profile_2", story_list_2),
         User(3,"ahmet1995","profile_3", story_list_3),
         User(4,"betül_14","profile_4", story_list_4),
-        User(5,"bugraakin","profile_5", story_list_5),
+        User(5,"ilayda_","profile_5", story_list_5),
     )
 }

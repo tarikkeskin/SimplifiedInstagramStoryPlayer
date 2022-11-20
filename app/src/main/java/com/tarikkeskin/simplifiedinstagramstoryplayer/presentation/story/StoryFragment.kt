@@ -3,10 +3,13 @@ package com.tarikkeskin.simplifiedinstagramstoryplayer.presentation.story
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -57,52 +60,12 @@ class StoryFragment : Fragment() {
 
 
         binding.cLNext.setOnTouchListener { view, motionEvent ->
-            when (motionEvent.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    progressBar.pause()
-                    countTimeAndHideStoryDetails()
-                }
-                MotionEvent.ACTION_UP -> {
-                    progressBar.start()
-                    showStoryDetail()
-                    /**
-                     * Handle click in touch listener
-                     * Credit
-                     * @-> https://stackoverflow.com/a/65670911/14858924
-                     */
-                    if (motionEvent.eventTime - motionEvent.downTime < 200 && motionEvent.actionMasked == MotionEvent.ACTION_UP) {
-                        view.performClick()
-                    }
-                    /**
-                     * End of credit
-                     */
-                }
-            }
+            touchListenerHelper(view,motionEvent)
             true
         }
 
         binding.cLBack.setOnTouchListener { view, motionEvent ->
-            when (motionEvent.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    progressBar.pause()
-                    countTimeAndHideStoryDetails()
-                }
-                MotionEvent.ACTION_UP -> {
-                    progressBar.start()
-                    showStoryDetail()
-                    /**
-                     * Handle click in touch listener
-                     * Credit
-                     * @-> https://stackoverflow.com/a/65670911/14858924
-                     */
-                    if (motionEvent.eventTime - motionEvent.downTime < 200 && motionEvent.actionMasked == MotionEvent.ACTION_UP) {
-                        view.performClick()
-                    }
-                    /**
-                     * End of credit
-                     */
-                }
-            }
+            touchListenerHelper(view,motionEvent)
             true
         }
 
@@ -126,7 +89,7 @@ class StoryFragment : Fragment() {
         storyViewPager?.isUserInputEnabled = false
 
         storyViewPager?.adapter =
-            StoryAdapter(requireContext(), user.storyList)
+            StoryAdapter(requireContext(), user.storyList,viewModel)
 
         // ------- Data binding -------
         binding.imageName = user.profilePicture
@@ -135,6 +98,9 @@ class StoryFragment : Fragment() {
         progressBar = binding.spb
         progressBar.segmentCount = user.storyList.size
         progressBar.viewPager = storyViewPager
+        viewModel.videoDuration.observe(viewLifecycleOwner){
+            progressBar.timePerSegmentMs = it
+        }
 
     }
 
@@ -148,22 +114,41 @@ class StoryFragment : Fragment() {
         progressBar.restartSegment()
     }
 
-    private fun countTimeAndHideStoryDetails(){
-        object : CountDownTimer(1500,1000){
-            override fun onTick(p0: Long) { }
-
-            override fun onFinish() {
-                binding.cLProfile.invisible()
-                binding.cLIndicator.invisible()
-                binding.cLBottomDesign.invisible()
-            }
-        }.start()
+    private fun hideStoryDetails(){
+        binding.cLProfile.invisible()
+        binding.cLIndicator.invisible()
+        binding.cLBottomDesign.invisible()
     }
 
     private fun showStoryDetail(){
-        binding.cLProfile.visible()
-        binding.cLIndicator.visible()
-        binding.cLBottomDesign.visible()
+            binding.cLProfile.visible()
+            binding.cLIndicator.visible()
+            binding.cLBottomDesign.visible()
+    }
+
+    private fun touchListenerHelper(view: View,motionEvent: MotionEvent){
+        when (motionEvent.action) {
+            MotionEvent.ACTION_DOWN -> {
+                progressBar.pause()
+                hideStoryDetails()
+            }
+            MotionEvent.ACTION_UP -> {
+                progressBar.start()
+
+                showStoryDetail()
+                /**
+                 * Handle click in touch listener
+                 * Credit
+                 * @-> https://stackoverflow.com/a/65670911/14858924
+                 */
+                if (motionEvent.eventTime - motionEvent.downTime < 200 && motionEvent.actionMasked == MotionEvent.ACTION_UP) {
+                    view.performClick()
+                }
+                /**
+                 * End of credit
+                 */
+            }
+        }
     }
 
 
