@@ -12,6 +12,9 @@ class StoryFragmentViewModel : ViewModel() {
     private val videoDurationMutable = MutableLiveData<Long>()
     val videoDuration: LiveData<Long> get() = videoDurationMutable
 
+    private val toggleVideoMutable = MutableLiveData<Boolean>()
+    val toggleVideo: LiveData<Boolean> get() = toggleVideoMutable
+
     init {
         currentStepMutable.value = 0
     }
@@ -22,5 +25,8 @@ class StoryFragmentViewModel : ViewModel() {
 
     fun setVideoDuration(duration: Long) {
         videoDurationMutable.value = duration
+    }
+    fun setToggleVideo(toggle:Boolean){
+        toggleVideoMutable.value = toggle
     }
 }
