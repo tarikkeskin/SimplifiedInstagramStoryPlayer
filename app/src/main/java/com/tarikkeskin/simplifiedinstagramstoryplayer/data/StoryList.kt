@@ -3,30 +3,30 @@ package com.tarikkeskin.simplifiedinstagramstoryplayer.data
 object StoryList {
 
     val story_list_1 = arrayListOf(
-        Story("https://cdn.impala.travel/properties/ckna61sei006a0uo56txresa3.jpg"),
-        Story("https://cdn.impala.travel/properties/ckna62ckp006b0uo51jq4dou6.jpg"),
-        Story("https://cdn.impala.travel/properties/ckna6389z006c0uo53gyeb9oq.jpg"),
-        Story("https://cdn.impala.travel/properties/ckna64p8r006f0uo51csrhy1v.jpg"),
+        Story("https://cdn.impala.travel/properties/ckna61sei006a0uo56txresa3.jpg",false),
+        Story("https://media.geeksforgeeks.org/wp-content/uploads/20201217192146/Screenrecorder-2020-12-17-19-17-36-828.mp4?_=1",true),
+        Story("https://cdn.impala.travel/properties/ckna6389z006c0uo53gyeb9oq.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckna64p8r006f0uo51csrhy1v.jpg",false),
     )
     val story_list_2 = arrayListOf(
-        Story("https://cdn.impala.travel/properties/ckn8rjsxa00r40snnc9tyaxox.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8rjvgw00r50snnak4tg6cx.jpg"),
+        Story("https://cdn.impala.travel/properties/ckn8rjsxa00r40snnc9tyaxox.jpg",false),
+        Story("https://media.geeksforgeeks.org/wp-content/uploads/20201217163353/Screenrecorder-2020-12-17-16-32-03-350.mp4",true),
     )
     val story_list_3 = arrayListOf(
-        Story("https://cdn.impala.travel/properties/ckn8rjxqf00r70snned0v16db.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8rk0g400r90snn51qg23na.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8rk35500ra0snn64zd22q4.jpg"),
+        Story("https://cdn.impala.travel/properties/ckn8rjxqf00r70snned0v16db.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckn8rk0g400r90snn51qg23na.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckn8rk35500ra0snn64zd22q4.jpg",false),
     )
     val story_list_4 = arrayListOf(
-        Story("https://cdn.impala.travel/properties/ckn8puw1e00pc0snn2hxyaorh.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8pr34h00p60snne5c6dsw6.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8prgvi00p70snnfggc3xzt.jpg"),
+        Story("https://cdn.impala.travel/properties/ckn8puw1e00pc0snn2hxyaorh.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckn8pr34h00p60snne5c6dsw6.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckn8prgvi00p70snnfggc3xzt.jpg",false),
     )
     val story_list_5 = arrayListOf(
-        Story("https://cdn.impala.travel/properties/ckn8wzjcw00z00snnhdlr9t7l.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8wy06n00yv0snn50x5034j.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8wyoux00yw0snn5bh19uwg.jpg"),
-        Story("https://cdn.impala.travel/properties/ckn8q92uw00pl0snncm7106z5.jpg"),
+        Story("https://cdn.impala.travel/properties/ckn8wzjcw00z00snnhdlr9t7l.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckn8wy06n00yv0snn50x5034j.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckn8wyoux00yw0snn5bh19uwg.jpg",false),
+        Story("https://cdn.impala.travel/properties/ckn8q92uw00pl0snncm7106z5.jpg",false),
     )
 
     val user_list = arrayListOf(

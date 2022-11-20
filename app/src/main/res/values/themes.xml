@@ -22,4 +22,15 @@
         <item name="android:layout_width">@dimen/story_bottom_icon_dim</item>
         <item name="android:layout_height">@dimen/story_bottom_icon_dim</item>
     </style>
+    <declare-styleable name="SegmentedProgressBar">
+        <attr name="totalSegments" format="integer" />
+        <attr name="timePerSegment" format="integer" />
+        <attr name="segmentMargins" format="dimension" />
+        <attr name="segmentCornerRadius" format="dimension" />
+        <attr name="segmentStrokeWidth" format="dimension" />
+        <attr name="segmentBackgroundColor" format="color" />
+        <attr name="segmentSelectedBackgroundColor" format="color" />
+        <attr name="segmentStrokeColor" format="color" />
+        <attr name="segmentSelectedStrokeColor" format="color" />
+    </declare-styleable>
 </resources>

@@ -1,19 +1,22 @@
 package com.tarikkeskin.simplifiedinstagramstoryplayer.presentation.story
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
 import com.tarikkeskin.simplifiedinstagramstoryplayer.R
 import com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters.StoryAdapter
 import com.tarikkeskin.simplifiedinstagramstoryplayer.data.StoryList
 import com.tarikkeskin.simplifiedinstagramstoryplayer.data.User
 import com.tarikkeskin.simplifiedinstagramstoryplayer.databinding.FragmentStoryBinding
+import com.tarikkeskin.simplifiedinstagramstoryplayer.utils.*
 
 class StoryFragment : Fragment() {
 
@@ -21,18 +24,14 @@ class StoryFragment : Fragment() {
 
     private var storyViewPager: ViewPager2? = null
 
+    private lateinit var progressBar: SegmentPB
+
     private lateinit var user: User
 
     private val viewModel: StoryFragmentViewModel by activityViewModels()
 
 
-    private val storyViewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-
-        }
-    }
-
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -55,6 +54,65 @@ class StoryFragment : Fragment() {
                 storyViewPager?.currentItem = storyViewPager?.currentItem?.minus(1)!!
             }
         }
+
+
+        binding.cLNext.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    progressBar.pause()
+                    countTimeAndHideStoryDetails()
+                }
+                MotionEvent.ACTION_UP -> {
+                    progressBar.start()
+                    showStoryDetail()
+                    /**
+                     * Handle click in touch listener
+                     * Credit
+                     * @-> https://stackoverflow.com/a/65670911/14858924
+                     */
+                    if (motionEvent.eventTime - motionEvent.downTime < 200 && motionEvent.actionMasked == MotionEvent.ACTION_UP) {
+                        view.performClick()
+                    }
+                    /**
+                     * End of credit
+                     */
+                }
+            }
+            true
+        }
+
+        binding.cLBack.setOnTouchListener { view, motionEvent ->
+            when (motionEvent.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    progressBar.pause()
+                    countTimeAndHideStoryDetails()
+                }
+                MotionEvent.ACTION_UP -> {
+                    progressBar.start()
+                    showStoryDetail()
+                    /**
+                     * Handle click in touch listener
+                     * Credit
+                     * @-> https://stackoverflow.com/a/65670911/14858924
+                     */
+                    if (motionEvent.eventTime - motionEvent.downTime < 200 && motionEvent.actionMasked == MotionEvent.ACTION_UP) {
+                        view.performClick()
+                    }
+                    /**
+                     * End of credit
+                     */
+                }
+            }
+            true
+        }
+
+
+        progressBar.listener = object : SegmentedProgressBarListener {
+            override fun onPage(oldPageIndex: Int, newPageIndex: Int) {}
+            override fun onFinished() { // User stories end, go next user
+                viewModel.setCurrentStep(1)
+            }
+        }
         return binding.root
     }
 
@@ -67,25 +125,47 @@ class StoryFragment : Fragment() {
         // Disable inner viewpager2 swipe operation!!
         storyViewPager?.isUserInputEnabled = false
 
-        //binding.leftIcon.setImageResource(mContext.resources.getIdentifier(option.rowImageName, "drawable",mContext.packageName))
         storyViewPager?.adapter =
             StoryAdapter(requireContext(), user.storyList)
-        storyViewPager?.registerOnPageChangeCallback(storyViewPagerCallback)
 
         // ------- Data binding -------
         binding.imageName = user.profilePicture
         binding.userName = user.userName
 
-        TabLayoutMediator(binding.tablayout,
-            storyViewPager!!) { tab, position ->
-        }.attach()
+        progressBar = binding.spb
+        progressBar.segmentCount = user.storyList.size
+        progressBar.viewPager = storyViewPager
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        storyViewPager?.unregisterOnPageChangeCallback(storyViewPagerCallback)
+    override fun onPause() {
+        super.onPause()
+        progressBar.pause()
     }
+
+    override fun onResume() {
+        super.onResume()
+        progressBar.restartSegment()
+    }
+
+    private fun countTimeAndHideStoryDetails(){
+        object : CountDownTimer(1500,1000){
+            override fun onTick(p0: Long) { }
+
+            override fun onFinish() {
+                binding.cLProfile.invisible()
+                binding.cLIndicator.invisible()
+                binding.cLBottomDesign.invisible()
+            }
+        }.start()
+    }
+
+    private fun showStoryDetail(){
+        binding.cLProfile.visible()
+        binding.cLIndicator.visible()
+        binding.cLBottomDesign.visible()
+    }
+
 
     // Singleton
     companion object {

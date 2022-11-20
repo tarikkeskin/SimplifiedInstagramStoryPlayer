@@ -49,11 +49,15 @@ dependencies {
     //Picasso
     implementation "com.squareup.picasso:picasso:$picasso_version"
 
-    //Fragment
+    //Fragment   (for viewModels() , activityViewModels())
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
     //Viewpager2
     implementation "androidx.viewpager2:viewpager2:$viewpager_version"
 
+    //VideoPlayer
+    implementation "androidx.media3:media3-exoplayer:$mediaVersion"
+    implementation "androidx.media3:media3-ui:$mediaVersion"
+    implementation "androidx.media3:media3-exoplayer-dash:$mediaVersion"
 
 }

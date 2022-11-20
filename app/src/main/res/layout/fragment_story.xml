@@ -107,18 +107,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tablayout"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@color/complete_transparent"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <com.tarikkeskin.simplifiedinstagramstoryplayer.utils.SegmentPB
+                android:id="@+id/spb"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_margin="8dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tabBackground="@drawable/tab_selector"
-                app:tabGravity="center"
-                app:tabIndicator="@null" />
+                app:segmentBackgroundColor="@color/grey"
+                app:segmentCornerRadius="2dp"
+                app:segmentMargins="@dimen/default_segment_margin"
+                app:segmentSelectedBackgroundColor="@color/white"
+                app:segmentSelectedStrokeColor="@android:color/transparent"
+                app:segmentStrokeColor="@android:color/transparent"
+                app:segmentStrokeWidth="1dp"
+                app:timePerSegment="6000"
+                app:totalSegments="10" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -151,6 +158,16 @@
                 app:layout_constraintStart_toEndOf="@+id/tVUserName"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/option_vertical" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="40dp"
@@ -171,12 +188,12 @@
                         android:id="@+id/iVProfilePicture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        app:customImageSet="@{imageName}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/profile_1"
-                        app:customImageSet="@{imageName}"
 
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
