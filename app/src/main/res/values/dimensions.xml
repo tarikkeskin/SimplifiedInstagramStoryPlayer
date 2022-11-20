@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="story_bottom_icon_dim">25dp</dimen>
+    <dimen name="default_segment_margin">2dp</dimen>
+    <dimen name="default_corner_radius">0dp</dimen>
+    <dimen name="default_segment_stroke_width">0dp</dimen>
+</resources>
