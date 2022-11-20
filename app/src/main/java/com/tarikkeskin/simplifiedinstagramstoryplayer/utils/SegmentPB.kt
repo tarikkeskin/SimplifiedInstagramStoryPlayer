@@ -41,7 +41,7 @@ class SegmentPB : View, Runnable, View.OnTouchListener {
 
     var timePerSegmentMs: Long =
         resources.getInteger(R.integer.default_time_per_segment_ms).toLong()
-        private set
+        public set
 
     private var segments = mutableListOf<Segment>()
     private val selectedSegment: Segment?
