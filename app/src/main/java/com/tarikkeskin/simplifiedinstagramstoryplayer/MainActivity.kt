@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.*
 import com.tarikkeskin.simplifiedinstagramstoryplayer.common.adapters.UserAdapter
 import com.tarikkeskin.simplifiedinstagramstoryplayer.common.anim.CubicTransition
 import com.tarikkeskin.simplifiedinstagramstoryplayer.data.StoryList
@@ -19,14 +20,6 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: StoryFragmentViewModel by viewModels()
 
-    private val userViewPagerCallback = object : ViewPager2.OnPageChangeCallback() {
-        override fun onPageSelected(position: Int) {
-            super.onPageSelected(position)
-
-        }
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -39,8 +32,6 @@ class MainActivity : AppCompatActivity() {
                 userViewPager?.currentItem = userViewPager?.currentItem?.minus(1)!!
             }
         }
-
-
     }
 
     private fun setupViewPager(binding: ActivityMainBinding) {
@@ -48,11 +39,21 @@ class MainActivity : AppCompatActivity() {
         userViewPager = binding.viewpagerUser
         userViewPager?.adapter = adapter
         userViewPager?.setPageTransformer(CubicTransition())
-        userViewPager?.registerOnPageChangeCallback(userViewPagerCallback)
+        userViewPager?.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                when (state) {
+                    SCROLL_STATE_IDLE -> {
+                        userViewPager?.offscreenPageLimit = OFFSCREEN_PAGE_LIMIT_DEFAULT
+                    }
+                    SCROLL_STATE_DRAGGING -> {
+                        userViewPager?.offscreenPageLimit = OFFSCREEN_PAGE_LIMIT_DEFAULT
+                    }
+                }
+            }
+        })
+        userViewPager?.offscreenPageLimit = OFFSCREEN_PAGE_LIMIT_DEFAULT
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        userViewPager?.unregisterOnPageChangeCallback(userViewPagerCallback)
-    }
 }
