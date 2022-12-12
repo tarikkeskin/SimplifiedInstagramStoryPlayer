@@ -2,14 +2,11 @@ package com.tarikkeskin.simplifiedinstagramstoryplayer.presentation.story
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -43,29 +40,14 @@ class StoryFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_story, container, false)
         setupViewPager(binding)
 
-        binding.cLNext.setOnClickListener {
-            if (storyViewPager?.currentItem == user.storyList.size - 1) {
-                viewModel.setCurrentStep(1)
-            } else {
-                storyViewPager?.currentItem = storyViewPager?.currentItem?.plus(1)!!
-            }
-        }
-        binding.cLBack.setOnClickListener {
-            if (storyViewPager?.currentItem == 0) {
-                viewModel.setCurrentStep(-1)
-            } else {
-                storyViewPager?.currentItem = storyViewPager?.currentItem?.minus(1)!!
-            }
-        }
-
 
         binding.cLNext.setOnTouchListener { view, motionEvent ->
-            touchListenerHelper(view,motionEvent)
+            touchListenerHelper(view, motionEvent, 1)
             true
         }
 
         binding.cLBack.setOnTouchListener { view, motionEvent ->
-            touchListenerHelper(view,motionEvent)
+            touchListenerHelper(view, motionEvent, 0)
             true
         }
 
@@ -89,7 +71,7 @@ class StoryFragment : Fragment() {
         storyViewPager?.isUserInputEnabled = false
 
         storyViewPager?.adapter =
-            StoryAdapter(requireContext(), user.storyList,viewModel)
+            StoryAdapter(requireContext(), user.storyList, viewModel)
 
         // ------- Data binding -------
         binding.imageName = user.profilePicture
@@ -97,11 +79,9 @@ class StoryFragment : Fragment() {
 
         progressBar = binding.spb
         progressBar.segmentCount = user.storyList.size
-        progressBar.viewPager = storyViewPager
-        viewModel.videoDuration.observe(viewLifecycleOwner){
+        viewModel.videoDuration.observe(viewLifecycleOwner) {
             progressBar.timePerSegmentMs = it
         }
-
 
     }
 
@@ -112,39 +92,44 @@ class StoryFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        progressBar.viewPager = storyViewPager
         progressBar.restartSegment()
+        Handler().postDelayed({
+            progressBar.start()
+        }, 300)
+
     }
 
-    private fun hideStoryDetails(){
-        binding.cLProfile.invisible()
-        binding.cLIndicator.invisible()
-        binding.cLBottomDesign.invisible()
-    }
 
-    private fun showStoryDetail(){
-            binding.cLProfile.visible()
-            binding.cLIndicator.visible()
-            binding.cLBottomDesign.visible()
-    }
-
-    private fun touchListenerHelper(view: View,motionEvent: MotionEvent){
+    private fun touchListenerHelper(view: View, motionEvent: MotionEvent, isNext: Int) {
         when (motionEvent.action) {
             MotionEvent.ACTION_DOWN -> {
                 progressBar.pause()
                 viewModel.setToggleVideo(true)
-                hideStoryDetails()
             }
             MotionEvent.ACTION_UP -> {
                 progressBar.start()
                 viewModel.setToggleVideo(false)
-                showStoryDetail()
                 /**
                  * Handle click in touch listener
                  * Credit
                  * @-> https://stackoverflow.com/a/65670911/14858924
                  */
                 if (motionEvent.eventTime - motionEvent.downTime < 200 && motionEvent.actionMasked == MotionEvent.ACTION_UP) {
-                    view.performClick()
+                    if (isNext == 1) {
+                        if (storyViewPager?.currentItem == user.storyList.size - 1) {
+                            viewModel.setCurrentStep(1)
+                        } else {
+                            storyViewPager?.currentItem = storyViewPager?.currentItem?.plus(1)!!
+                        }
+                    } else {
+                        if (storyViewPager?.currentItem == 0) {
+                            viewModel.setCurrentStep(-1)
+                        } else {
+                            storyViewPager?.currentItem = storyViewPager?.currentItem?.minus(1)!!
+                        }
+                    }
+
                 }
                 /**
                  * End of credit
@@ -154,7 +139,6 @@ class StoryFragment : Fragment() {
     }
 
 
-    // Singleton
     companion object {
         var POSITION_ARG = "position_arg"
 
